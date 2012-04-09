@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>TestCase</title>
+        
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/Event.js"></script>
+        <script type="text/javascript" src="Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="Core/Hashtable.js"></script>
+        <script type="text/javascript" src="Core/Element.js"></script>
+        <script type="text/javascript" src="Lib/JSON.js"></script>
+        <script type="text/javascript" src="Lib/IO/Ajax.js"></script>
+    </head>
+    <body>
+        <div id="foo"></div>
+        <form id="booz">
+            <p>
+                <input type="file" name="filefoo"/>
+            </p>
+            <p>
+                Textbox :<br/>
+                <input type="text" name="txt-foo" value="ohoho!!"/> ohoho!<br/>
+                <input type="text" name="txt-bar" value="hinhin!!"/> hinhin!<br/>
+            </p>
+            
+            <p>
+                Unique Checkbox :<br/>
+                <input type="checkbox" name="chk-foo" value="1"/> 1<br/>
+                <input type="checkbox" name="chk-bar" value="1"/> 1<br/>
+            </p>
+            
+            <p>
+                Multi Checkbox :<br/>
+                <input type="checkbox" name="multichk-foo[]" value="1"/> 1<br/>
+                <input type="checkbox" name="multichk-foo[]" value="2"/> 2<br/>
+                <input type="checkbox" name="multichk-foo[]" value="3"/> 3<br/>
+                <input type="checkbox" name="multichk-foo[]" value="4"/> 4<br/>
+                <input type="checkbox" name="multichk-foo[]" value="5"/> 5<br/>
+            </p>
+            
+            <p>
+                Radio :<br/>
+                <input type="radio" name="radio-foo" value="0"/> 0<br/>
+                <input type="radio" name="radio-foo" value="1"/> 1<br/>
+            </p>
+            
+            <p>
+                Select :<br/>
+                <select name="slt-foo" id="ababoo">
+                    <option value="1" selected="selected">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </p>
+            
+            <p>
+                Select Multiple :<br/>
+                <select name="slt-multi-foo" id="abafoo" multiple="multiple" size="5">
+                    <option value="1" selected="selected">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+            </p>
+            
+            <p>
+                Textarea :<br/>
+                <textarea name="txtarea-foo" id="txt-foo"></textarea>
+            </p>
+            
+            <button type="button" onclick="request()">clickme</button>
+        </form>
+        <script type="text/javascript">
+        
+            var a = new Swell.Lib.IO.Ajax();
+            a.serializeForm('booz');
+            a.subscribe('onInitiate', function() {
+                document.getElementById('foo').innerHTML = 'Starting...';
+            });
+            
+            a.subscribe('onProgress', function() {
+                document.getElementById('foo').innerHTML = '<img src="ajax-loader.gif" />';
+            });
+            
+            var request = function() {
+                a.request('post', 'test.php', function(wrapper) {
+                    document.getElementById('foo').innerHTML = wrapper.xhr.responseText;
+                }, null, {foo : 'bar', bar : 'boo'});
+            }
+        </script>
+    </body>
+</html>

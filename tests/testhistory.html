@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>History</title>
+    </head>
+    <body>
+        
+        <a href="#foo">#foo</a><br/>
+        <a href="#bar">#bar</a><br/>
+        <a href="#boo">#boo</a><br/>
+        
+        <script type="text/javascript">
+            window.location.watch('hash', function(property, o, value) {
+                return value;
+            });
+            
+            var anchors = document.getElementsByTagName('A');
+            anchors[0].addEventListener('click', function(e) {
+                document.location.hash = '#foob=foo';
+                e.preventDefault();
+                alert('foo');
+            }, false);
+        </script>
+    </body>
+</html>
+

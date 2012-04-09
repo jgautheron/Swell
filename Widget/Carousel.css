@@ -1,0 +1,32 @@
+/* swell carousel */
+.swell-widget-carousel-container {
+    width:500px;
+    margin-left:100px;
+    position:relative;
+    padding:5px;
+    background-color:#f3f3f3;
+    border:1px solid #ccc;
+}
+
+.swell-widget-carousel-viewport {
+    overflow:hidden;
+    position:relative;
+    width:100%;
+}
+
+.swell-widget-carousel-viewport ul {
+    list-style-type:none;
+    position:relative;
+    display:block;
+    margin:0;
+    padding:0;
+    height:150px;
+    width:100000px;
+}
+
+.swell-widget-carousel-viewport ul li {
+    float:left;
+    height:150px;
+    text-align:left;
+    padding:0 5px;
+}

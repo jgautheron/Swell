@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>Swell - Desktop file upload</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+<!--         <script src="http://get.swl.fr/trunk/Event/Ajax/Element.js?ioi" type="text/javascript"></script> -->
+        
+        <script type="text/javascript" src="../../Swell.js"></script>
+        <script type="text/javascript" src="../../Core/Core.js"></script>
+        <script type="text/javascript" src="../../Core/Browser.js"></script>
+        <script type="text/javascript" src="../../Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="../../Core/Event.js"></script>
+        <script type="text/javascript" src="../../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../../Core/Element.js"></script>
+        <script type="text/javascript" src="../../Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="../../Lib/JSON.js"></script>
+        <script type="text/javascript" src="../../Lib/IO/Ajax.js"></script>
+        <script type="text/javascript" src="../../Core/Asset.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/DDM.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/Draggable.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/Droppable.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="http://playground.justswell.org/css/playground.css" />
+        <style type="text/css">
+        img {
+            border:0;
+        }
+        
+        .dd-proxy {
+            -webkit-opacity:.5;
+        }
+        
+        .dd-drop-allowed {
+            outline:2px solid green;
+        }
+        
+        .dd-drop-forbidden {
+            outline:2px solid red;
+        }
+        
+        </style>
+
+    </head>
+    
+    <body id="foob">
+
+        <img class="logo" src="http://playground.justswell.org/images/swell.png" />
+        <h5 style="color:#888;font:12px Verdana;margin:0 0 20px;font-style:italic;">Drop files to your desktop</h5>
+
+        <span id="xfile" style="background-color:#fff; padding:5px;">Drag me on your desktop to download</span>
+        
+        <br style="clear:left;" />
+        <br style="clear:left;" />
+        <br style="clear:left;" />
+        <br style="clear:left;" />
+        
+        <div id="boo" style="border:2px solid black; width:50px; height:50px;"></div>
+        
+        
+        <script type="text/javascript">
+        
+        var dd = new Swell.Lib.DD.Draggable('xfile', {'proxy':true});
+        var dd2 = new Swell.Lib.DD.Droppable('boo');
+
+        /*Swell.Lib.DD.DDM.dragend.subscribe(function(e) {
+            console.log(e.dataTransfer.getData('text/x-moz-url'));
+        });*/
+
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Swell - TestCase</title>
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/Element.js"></script>
+        <script type="text/javascript" src="Core/Event.js"></script>
+        <script type="text/javascript" src="Core/Hashtable.js"></script>
+    </head>
+    <body bgcolor="#dce7d3" style="margin:40px;">
+        <h1 style="font-family:arial;">Swell's POC (Keyboard with an A-Z a-z range only)</h1>
+        <input type="text" style="font-size:30px; padding:5px; width:500px;" id="textbox" />
+        
+    <script type="text/javascript">
+
+    Swell.Core.Event.addKeyListener('textbox', '*', function(e, key, modifiers) {
+        
+        //alert(modifiers.ctrl);
+        
+        // Exclude backspace and del
+        if(key === 'backspace' || key === 'del')
+            return true;
+            
+        // And navigation keys
+        if(key === 'up'    ||
+           key === 'down'  ||
+           key === 'right' ||
+           key === 'left') {
+            return true;
+        }
+            
+        if(/^([a-z])$/.test(key)) {
+            return true;
+        }
+        e.stop();
+        return false;
+    }, null, null, true) ;
+        
+    </script>
+        
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+<head>
+<script type="text/javascript" src="Swell.js"></script>
+<script type="text/javascript" src="Core/Core.js"></script>
+<script type="text/javascript" src="Core/Browser.js"></script>
+<script type="text/javascript" src="Core/BrowserSupports.js"></script>
+<script type="text/javascript" src="Core/Event.js"></script>
+</head>
+<body onload="init();">
+
+<script>
+
+var DDM = {
+    cache : {},
+    
+    register : function(id, obj) {
+        this.cache[id] = obj;
+    },
+    
+    unregister : function(id) {
+        this.cache[id] = null;
+        delete this.cache[id];
+    },
+    
+    get : function(id) {
+        return this.cache[id];
+    }
+};
+
+function init()
+{
+    var image = document.getElementById("image");
+    
+    Event.add(image, "click", function(e) {
+        e.target.dragDrop();
+    });
+    
+    Event.add(image, "dragstart", function(e) {
+
+        var _uniqueID = Swell.uniqueId();
+        e.dataTransfer.setData('Text', _uniqueID);
+        
+        DDM.register(_uniqueID, e.target);
+        
+    });
+    
+    Event.add(image, "dragend", function(e) {
+        DDM.unregister(e.dataTransfer.getData('Text'));
+    });
+    
+    Event.add(image, "drag", eventReceived);
+  //image.addEventListener("dragdrop", eventReceived, false);
+  
+    var target = document.getElementById("target");
+    Event.add(target, "drop", function(e) {
+        e.target.innerHTML = ''; 
+        e.target.appendChild(DDM.get(e.dataTransfer.getData("Text")));
+    });
+  
+}
+
+var lastX = lastY = 0;
+
+function eventReceived(e) {
+    if(e.type !== 'drag' && e.type !== 'dragover' && e.type === 'dragend') {
+        e.preventDefault();
+    }
+}
+
+</script>
+
+<img id="image" src="http://trac.justswell.org/chrome/site/tracswell.png" />
+
+<div id="target" ondragenter="return false" ondragover="return false" rel="target" style="width: 400px; height: 200px; border: 1px solid black;">
+  Drag Image Here
+</div>
+</body>
+</html>

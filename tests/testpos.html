@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>TestCase</title>
+        
+        <!--
+        <script type="text/javascript" src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script>
+        -->
+        
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="Core/Event.js"></script>
+        <script type="text/javascript" src="Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="Core/Hashtable.js"></script>
+        <script type="text/javascript" src="Core/Element.js"></script>
+        <script type="text/javascript" src="Core/Position.js"></script>
+        
+        <style type="text/css">
+        
+            .mystyle {
+                background-color:#f5f5f5;
+                border:2px solid black;
+                padding:10px;
+            }
+            
+            .mystyle.disabled {
+                background-color:gray;
+                color:#ccc;
+            }
+        
+        </style>
+    
+    </head>
+    
+    
+    <body id="foob">
+        <h1>Test Case</h1>
+        
+            
+        <div class="mystyle" id="foox" style="width:100px;padding:50px;">
+            <span id="atafoo">foo</span>
+            <span>Boo</span>
+        Foo...
+        </div>
+        <div class="" id="bleh">Bleh...</div>
+        
+        <div class="mystyle">foo</div>
+        <span id="aboo"></span>
+        <div class="bench-result" id="bench-result">
+            
+        </div>
+        
+        <script type="text/javascript">
+            
+            var startTime = new Date().getMilliseconds();
+            var testCount = 1000;
+            
+            while (testCount--) {
+                //var isMSIE = /*@cc_on!@*/false;
+                var isMSIE = !!document.fileSize;
+            }
+            var endTime = new Date().getMilliseconds();
+            Swell.Core.get('bench-result').innerHTML = (endTime - startTime) + 'ms';
+
+            var div1 = html.div({
+                id : 'testpos',
+                style : {
+                    backgroundColor : '#CC0000',
+                    width : $('foox').getWidth() + 'px',
+                    height : $('foox').getHeight() + 'px',
+                    position : 'absolute',
+                    opacity  : '0.5'
+                }
+            }, 'FOO')
+            .setXY($('foox').getXY())
+            .appendTo(document.body);
+            
+            var div1o = div1.getOffset();
+            var div2 = html.div({
+                id : 'testpos2',
+                style : {
+                    backgroundColor : '#CC0000',
+                    width : '50px',
+                    height : '50px',
+                    position : 'absolute'
+                }
+            }, 'BAR')
+            .setXY([div1o.right - 100, div1o.top - 20])
+            .appendTo(document.body);
+            
+            
+            html.div({
+                id : 'contexttest',
+                style : {
+                    backgroundColor : '#CC0000',
+                    width : '50px',
+                    height : '50px',
+                    position : 'absolute'
+                }
+            }, 'BOO')
+            .setContext('foox', 'rb')
+            .appendTo(document.body);
+            
+            
+            var divWp = div1.getIntersectArea(div2.getOffset());
+            
+            html.div({
+                style : {
+                    backgroundColor : '#000',
+                    position : 'absolute',
+                    opacity : .5
+                }
+            }, 'BAR')
+            .applyBoxModel(divWp)
+            .appendTo(document.body);
+        </script>
+        
+    </body>
+</html>

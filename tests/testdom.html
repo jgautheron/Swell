@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>TestCase</title>
+        
+        <!--
+        <script type="text/javascript" src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script>
+        -->
+        
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/Dom.js"></script>
+        
+        <style type="text/css">
+        
+            .mystyle {
+                background-color:#f5f5f5;
+                border:2px solid black;
+                padding:10px;
+            }
+            
+            .mystyle.disabled {
+                background-color:gray;
+                color:#ccc;
+            }
+        
+        </style>
+    
+    </head>
+    
+    
+    <body id="foob">
+        <h1>Test Case</h1>
+        
+            
+        <div class="mystyle" id="foox">
+            <span id="atafoo">foo</span>
+            <span>Boo</span>
+        Foo...
+        </div>
+        <div class="" id="bleh">Bleh...</div>
+        
+        <div class="mystyle">foo</div>
+        <span id="aboo"></span>
+        <div class="bench-result" id="bench-result">
+            
+        </div>
+        
+        <script type="text/javascript">
+            Dom.addClass(['foox', 'bleh'], ['mystyle', 'disabled']);
+            
+            var startTime = new Date().getMilliseconds();
+            var testCount = 10;
+            
+            while (testCount--) {
+                Dom.isChild('atafoo', 'foob');
+            }
+            var endTime = new Date().getMilliseconds();
+            Dom.get('bench-result').innerHTML = (endTime - startTime) + 'ms';
+            
+            console.log(Dom.isChild('atafoo', 'foob'));
+        </script>
+        
+    </body>
+</html>

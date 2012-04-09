@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>Swell - Native Drag&Drop implementation</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+        <script type="text/javascript" src="../Swell.js"></script>
+        <script type="text/javascript" src="../Core/Core.js"></script>
+        <script type="text/javascript" src="../Core/Browser.js"></script>
+        <script type="text/javascript" src="../Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="../Core/Event.js"></script>
+        <script type="text/javascript" src="../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../Core/Element.js"></script>
+        <script type="text/javascript" src="../Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="../Core/Asset.js"></script>
+        <script type="text/javascript" src="../Lib/DD/DDM.js"></script>
+        <script type="text/javascript" src="../Lib/DD/Draggable.js"></script>
+        <script type="text/javascript" src="../Lib/DD/Droppable.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="http://playground.justswell.org/css/playground.css" />
+        <style type="text/css">
+        
+            #moo:-khtml-drag {
+                background-color:red;
+            }
+            
+            .dd-drop-allowed {
+                outline:2px solid blue;
+            }
+            
+            .dd-drop-forbidden {
+                outline:none;
+            }
+            
+            .feed {
+                width:70%;
+                margin:20px 0;
+            }
+            
+            .feed .title {
+                font-family:arial;
+                color:#333;
+                font-size:14px;
+                font-weight:bold;
+                border-top:1px solid #ccc;
+                padding:5px 0;
+            }
+            
+            .feed .desc {
+                font-family:arial;
+                color:#666;
+                font-size:11px;
+                line-height:13px;
+                padding:0 0 5px 0;
+            }
+            
+            #moo {
+                width:200px;
+                height:200px;
+                background:#fff url(rss.png) 0 0;
+            }
+            
+            #moo.hovering {
+                background:#fff url(rss.png) 0 -200px;
+            }
+            
+            .loading {
+                background:transparent url(ajax-loader.gif) no-repeat center center;
+                width:50px;
+                height:50px;
+            }
+        
+        </style>
+
+    </head>
+    
+    <body id="foob">
+
+        <img class="logo" src="http://playground.justswell.org/images/swell.png" />
+        <h5 style="color:#888;font:12px Verdana;margin:0;font-style:italic;">Native Drag&Drop implementation</h5>
+
+        <div id="moo"></div>
+        <div id="debug" class="feed"></div>
+        
+        <script type="text/javascript">
+         
+            var dd2 = new Swell.Lib.DD.Droppable('moo');
+            
+            dd2.ondragover = function(e) {
+                console.log(this.hasType(e,'DD_URL'));
+                if(this.hasType(e,'DD_URL')) {
+                    e.target.className = 'hovering';
+                } else {
+                    e.dataTransfer.dropEffect = "none";
+                }
+            }
+            
+            dd2.ondragleave = function(e) {
+                e.target.className = '';
+            }
+            
+            function moo(json) {
+                var records = json.query;
+                var feedHtml = '';
+                
+                for(var n=0; n < records.results.item.length; n++) {
+                    var feed = records.results.item[n];
+                    
+                    feedHtml += '<div class="title">'+feed.title + '</div>';
+                    feedHtml += '<div class="desc">'+feed.description+'</div>';
+                }
+                $('debug').html(feedHtml);
+                
+            }
+            
+            dd2.ondrop = function(e) {
+                var file = this.getData(e, 'DD_URL').split("\n")[0];
+                console.log(file);
+                if (/^http\:\/\//i.test(file) !== true) {
+                    return false;
+                }
+
+                $('debug').html('loading…');
+                e.target.className = '';
+                
+                var yqlRequest = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20rss%20where%20url=%22'+file+'%22&format=json&callback=moo';
+                
+                html.script({
+                    'type' : 'text/javascript',
+                    'src'  : yqlRequest
+                }).appendTo(document.getElementsByTagName('head')[0]);
+                
+                new Swell.Lib.DD.Draggable('debug', {
+                    proxy : true
+                });
+                
+            }
+
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Swell - TestCase</title>
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/Event.js"></script>
+        <script type="text/javascript" src="Core/KeyListener.js"></script>
+    </head>
+    <body>
+    <script type="text/javascript">
+        Event.addKeyListener(document, 'ctrl+c', function() {
+            alert('moo');
+        });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!--        <title>Swell - TestCase</title>
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Lib/JSON.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/Element.js"></script>
+        <script type="text/javascript" src="Core/Event.js"></script>
+        <script type="text/javascript" src="Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="Core/Hashtable.js"></script>
+        <script type="text/javascript" src="Core/Asset.js"></script>
+        <script type="text/javascript" src="Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="Core/Element/Bridge/Asset.js"></script>
+        <style type="text/css"> -->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+    <head>
+        <title>Swell - TestCase</title>
+
+        <script type="text/javascript" src="../Swell.js"></script>
+        <script type="text/javascript" src="../Core/Core.js"></script>
+        <script type="text/javascript" src="../Lib/JSON.js"></script>
+        <script type="text/javascript" src="../Core/Browser.js"></script>
+        <script type="text/javascript" src="../Core/Element.js"></script>
+        <script type="text/javascript" src="../Core/Event.js"></script>
+        <script type="text/javascript" src="../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../Core/Asset.js"></script>
+        <script type="text/javascript" src="../Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="../Core/Element/Bridge/Asset.js"></script>
+        <link rel="stylesheet" type="text/css" href="playground.css" />
+    </head>
+    <body>
+        <div id="left">
+
+             <h1>Lazy loading images with triggers</h1>
+
+             <p class="note" style="color:#666;margin-bottom:0.5em">Mouse over the images to really load them <b>Warning: experimental code, subject to change.</b></p>
+             <p class="note" style="color:#666;margin-bottom:0.5em">Get the <a href="http://get.swl.fr/trunk/ElementAsset.js">CDN link</a> for this example.</p>
+
+            <p class="note" style="color:#666;font-style:normal">Additional note: You may not see the borders around the images depending on the browser.</p>
+
+            <div class="playground">
+            
+                <a href="http://www.learning-graph.com/images/clownfish.jpg" rel="swell-lazy-load">
+                    <img id="moo" src="blank.png" width="400" height="250" />
+                </a>
+                
+                <a href="http://farm3.static.flickr.com/2082/2480471050_43a009c38c.jpg" rel="swell-lazy-load">
+                    <img id="foo" src="blank.png" width="167" height="250" />
+                </a>
+            </div>
+        
+        </div>
+        
+        <script type="text/javascript">
+            
+            Swell.Core.Event.onDomReady(function() {
+                $(['moo','foo']).lazyload({
+                    'trigger' : 'mouseover',
+                    'cls'     : 'loading'
+                });
+            });
+            
+        </script>
+    </body>
+</html>

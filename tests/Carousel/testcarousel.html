@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+    <head>
+        <title>TestCase</title>
+        
+        <script type="text/javascript" src="../../Swell.js"></script>
+        <script type="text/javascript" src="../../Core/Core.js"></script>
+        <script type="text/javascript" src="../../Core/Browser.js"></script>
+        <script type="text/javascript" src="../../Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="../../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../../Core/Element.js"></script>
+        <script type="text/javascript" src="../../Core/Event.js"></script>
+        <script type="text/javascript" src="../../Core/KeyListener.js"></script>
+        <script type="text/javascript" src="../../Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="../../Core/Element/Bridge/KeyListener.js"></script>
+        <script type="text/javascript" src="../../Core/Asset.js"></script>
+        <script type="text/javascript" src="../../Core/Element/Bridge/Asset.js"></script>
+        <script type="text/javascript" src="../../Core/Position.js"></script>
+        <script type="text/javascript" src="../../Widget/Carousel.js"></script>
+        
+        <style type="text/css">
+        /* swell carousel */
+        .swell-widget-carousel-container {
+            width:500px;
+            margin-left:100px;
+            position:relative;
+            padding:5px;
+            background-color:#f3f3f3;
+            border:1px solid #ccc;
+            outline:none;
+            -moz-border-radius:10px;
+            -webkit-border-radius:10px;
+            border-radius:10px;
+        }
+        
+        .swell-widget-carousel-viewport {
+            overflow:hidden;
+            position:relative;
+            width:100%;
+        }
+        
+        .swell-widget-carousel-viewport ul {
+            list-style-type:none;
+            position:relative;
+            display:block;
+            margin:0;
+            padding:0;
+            height:150px;
+            width:100000px;
+        }
+        
+        .swell-widget-carousel-viewport ul li {
+            float:left;
+            height:150px;
+            text-align:left;
+            padding:0 5px;
+        }
+        
+        /* navigation arrows */
+        .toparrow, .bottomarrow {
+            width:0;
+            height:0;
+            overflow:hidden;
+            border:0 solid #fff;
+            border-color:#fff #999;
+        }
+        
+        #leftnav.disabled .toparrow, #leftnav.disabled .bottomarrow, #rightnav.disabled .toparrow, #rightnav.disabled .bottomarrow {
+            border-color:#fff #ccc;
+            cursor:default;
+        }
+        
+        .toparrow {
+            border-top-width:30px;
+        }
+        
+        .bottomarrow {
+            border-bottom-width:30px;
+        }
+        
+        #leftnav, #rightnav {
+            cursor:pointer;
+            position:absolute;
+            top:50%;
+            height:80px;
+            margin-top:-40px;
+        }
+        
+        #leftnav {
+            left:-11px;
+        }
+        
+        #rightnav {
+            right:-11px;
+        }
+        
+        #leftnav .toparrow, #leftnav .bottomarrow {
+            border-right-width:10px;
+        }
+        
+        #rightnav .toparrow, #rightnav .bottomarrow {
+            border-left-width:10px;
+        }
+        
+        /* carousel step count container */
+        .count {
+            position:absolute;
+            top:-14px;
+            right:0;
+        }
+        
+        .count div {
+            float:left;
+            margin-left:5px;
+        }
+        
+        /* count dots
+         * degrades gracefully as squares
+        */
+        .dot {
+            width:10px;
+            height:10px;
+            -moz-border-radius:5px;
+            -webkit-border-radius:5px;
+            border-radius:5px;
+            background:#d9d9d9;
+            font-size:0;
+        }
+        
+        .dot.current {
+            background:#9e9e9e;
+        }
+        </style>
+    
+    </head>
+    
+    
+    <body id="fooi">
+        <h1>Test Case</h1>
+        
+        <div class="swell-widget-carousel-container" id="foo">
+            <div id="leftnav" class="disabled"><div class="toparrow"></div><div class="bottomarrow"></div></div>
+            <div id="rightnav"><div class="toparrow"></div><div class="bottomarrow"></div></div>
+            <div class="swell-widget-carousel-viewport">
+                <ul id="bar">
+                    <li><img src="carousel_01.jpg" alt=""/></li>
+                    <li><img src="carousel_02.jpg" alt=""/></li>
+                    <li><img src="carousel_03.jpg" alt=""/></li>
+                    <li><img src="carousel_04.jpg" alt=""/></li>
+                    <li><img src="carousel_05.jpg" alt=""/></li>
+                    <li><img src="carousel_06.jpg" alt=""/></li>
+                    <li><img src="carousel_07.jpg" alt=""/></li>
+                </ul>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+        Swell.Core.Event.on(window, 'load', function() {
+            var carousel = new Swell.Widget.Carousel('bar', {
+                parent : 'foo',
+                keylistener : true,
+                navigation : {
+                    left : 'leftnav',
+                    right : 'rightnav'
+                }
+            });
+            
+            /* Sets up counter */
+            var COUNT_CLASSNAME = 'count',
+                NAV_DISABLED_CLASSNAME = 'disabled',
+                DOT_CLASSNAME = 'dot', DOT_CURRENT_CLASSNAME = 'current',
+                DOT_PREFIX = 'dot_',
+                countDots = [], dot = null;
+            for (var i = 0, len = carousel.offsets.length; i < len; i++) {
+                dot = html.div({
+                    id : DOT_PREFIX + i,
+                    className : DOT_CLASSNAME,
+                    events : {
+                        'click' : {
+                            fn : function(e, i) {
+                                carousel.setOffset(i);
+                            }, args : i
+                        }
+                    }
+                });
+                
+                // first iteration = current
+                if (i === 0) {
+                    dot.addClass(DOT_CURRENT_CLASSNAME);
+                }
+                countDots.push(dot);
+            }
+            $('foo').prepend(html.div(null, countDots).addClass(COUNT_CLASSNAME));
+            
+            var previousOffset = 0, lastOffset;
+            carousel.subscribe('onPositionChange', function() {
+                $([DOT_PREFIX + previousOffset, DOT_PREFIX + this.currentOffset]).toggleClass(DOT_CURRENT_CLASSNAME);
+                
+                lastOffset = this.offsets.length - 1;
+                // enables arrows
+                if (previousOffset === 0) {
+                    $(this.config.navigation.left).removeClass(NAV_DISABLED_CLASSNAME);
+                } else if (previousOffset === lastOffset) {
+                    $(this.config.navigation.right).removeClass(NAV_DISABLED_CLASSNAME);
+                }
+                
+                // disables arrows
+                if (this.currentOffset === 0) {
+                    $(this.config.navigation.left).addClass(NAV_DISABLED_CLASSNAME);
+                } else if (this.currentOffset === lastOffset) {
+                    $(this.config.navigation.right).addClass(NAV_DISABLED_CLASSNAME);
+                }
+                previousOffset = this.currentOffset;
+            });
+            
+        });
+        </script>
+        
+    </body>
+</html>

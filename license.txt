@@ -1,0 +1,1 @@
+Copyright (c) 2009, Swell All rights reserved. Code under BSD license: http://www.justswell.org/license.txt

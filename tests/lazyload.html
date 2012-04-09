@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Swell - TestCase</title>
+        <script type="text/javascript" src="../Swell.js"></script>
+        <script type="text/javascript" src="../Core/Core.js"></script>
+        <script type="text/javascript" src="../Lib/JSON.js"></script>
+        <script type="text/javascript" src="../Core/Browser.js"></script>
+        <script type="text/javascript" src="../Core/Element.js"></script>
+        <script type="text/javascript" src="../Core/Event.js"></script>
+        <script type="text/javascript" src="../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../Core/Asset.js"></script>
+    </head>
+    <body>
+        <h1 style="font-family:arial;" id="foo">JS Lazyload</h1>
+        <input type="text" id="instantText" placeholder="Type your search..." />
+        <div id="receiver"></div>
+        <script type="text/javascript">
+
+            var asset = new Swell.Core.Asset();
+
+            Swell.Core.Event.on('instantText', 'keyup', function(e) {
+
+                $('receiver').empty();
+                var val = e.target.value;
+                
+                asset.load('jsonp', 
+                    'http://search.yahooapis.com/ImageSearchService/V1/imageSearch?appid=YahooDemo&query='+val+'&output=json&callback='
+                , function() {
+                    for(var _n = 0; _n < arguments.length; _n++) {
+                        var yim = arguments[_n];
+                        for(var _i = 0, _im; _im = yim.ResultSet.Result[_i++];) {
+                            html.img({
+                                'src'   : _im.Thumbnail.Url,
+                                'alt'   : _im.Title,
+                                'title' : _im.Title,
+                                'width' : _im.Thumbnail.Width,
+                                'height': _im.Thumbnail.Height
+                            }).appendTo('receiver');
+                        }
+                    }
+                });
+            });
+
+            
+        </script>
+    </body>
+</html>

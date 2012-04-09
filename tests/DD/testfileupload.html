@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>Swell - Desktop file upload</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+<!--         <script src="http://get.swl.fr/trunk/Event/Ajax/Element.js?ioi" type="text/javascript"></script> -->
+        
+        <script type="text/javascript" src="../../Swell.js"></script>
+        <script type="text/javascript" src="../../Core/Core.js"></script>
+        <script type="text/javascript" src="../../Core/Browser.js"></script>
+        <script type="text/javascript" src="../../Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="../../Core/Event.js"></script>
+        <script type="text/javascript" src="../../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../../Core/Element.js"></script>
+        <script type="text/javascript" src="../../Core/Position.js"></script>
+        <script type="text/javascript" src="../../Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="../../Lib/JSON.js"></script>
+        <script type="text/javascript" src="../../Lib/IO/Ajax.js"></script>
+        <script type="text/javascript" src="../../Core/Asset.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/DDM.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/Draggable.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/Droppable.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="http://playground.justswell.org/css/playground.css" />
+        <style type="text/css">
+        .clear {
+            clear:both;
+        }
+        #upload {
+            font-size:220px;
+        }
+        #drop-container {
+            width:510px;
+            overflow:hidden;
+            color:#ccc;
+            font:normal 24px Helvetica,Arial,sans-serif;
+            margin-top:20px;
+        }
+        #drop-zone {
+            position:absolute;
+            top:0;
+            left:0;
+            filter:alpha(opacity=0);
+            -khtml-opacity:0;
+            -webkit-opacity:0;
+            -moz-opacity:0;
+            opacity:0;
+        }
+        #loader {
+            background:transparent url(ajax-loader.gif) 0 0;
+            width:16px;
+            height:16px;
+            position:absolute;
+            bottom:10px;
+            left:90px;
+            display:none;
+        }
+        textarea {
+            width:500px;
+            height:200px;
+        }
+        </style>
+
+    </head>
+    
+    <body id="foob">
+
+        <img class="logo" src="http://playground.justswell.org/images/swell.png" />
+        <h5 style="color:#888;font:12px Verdana;margin:0 0 20px;font-style:italic;">Drag & drop text files</h5>
+        
+        <!-- drop zone not displayed by default so we can edit the textarea -->
+        <div id="drop-zone" style="display:none;">
+            <form id="foorm" action="upload.php" method="post">
+                <!-- we could also handle multiple files upload by using multiple="multiple" and open each file in a tab :D -->
+                <input type="file" name="file" id="upload" />
+            </form>
+        </div>
+        <div id="drop-container">
+            <textarea id="text">Drop your file here</textarea>
+            <div id="loader"></div>
+        </div>
+        <br class="clear" />
+        
+        <script type="text/javascript">
+        Swell.Core.Event.onDomReady(function() {
+            $('drop-zone').applyBoxModel($('text').getOffset());
+        
+            var dd = new Swell.Lib.DD.Droppable('text', {
+                'denyDrop' : true
+            });
+            dd.ondragover = function(e) {
+                $('drop-zone').show();
+            };
+            Swell.Core.Event.add('upload', 'change', function() {
+                alert('foo');return;
+            });
+        });
+        </script>
+        
+    </body>
+</html>

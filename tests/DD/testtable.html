@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>Swell - Desktop file upload</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+<!--         <script src="http://get.swl.fr/trunk/Event/Ajax/Element.js?ioi" type="text/javascript"></script> -->
+        
+        <script type="text/javascript" src="../../Swell.js"></script>
+        <script type="text/javascript" src="../../Core/Core.js"></script>
+        <script type="text/javascript" src="../../Core/Browser.js"></script>
+        <script type="text/javascript" src="../../Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="../../Core/Event.js"></script>
+        <script type="text/javascript" src="../../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../../Core/Element.js"></script>
+        <script type="text/javascript" src="../../Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="../../Lib/JSON.js"></script>
+        <script type="text/javascript" src="../../Lib/IO/Ajax.js"></script>
+        <script type="text/javascript" src="../../Core/Asset.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/DDM.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/Draggable.js"></script>
+        <script type="text/javascript" src="../../Lib/DD/Droppable.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="http://playground.justswell.org/css/playground.css" />
+        <style type="text/css">
+        
+        body {
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+        
+        img {
+            border:0;
+        }
+        
+        .dd-proxy {
+            -webkit-opacity:.7;
+            -moz-opacity:.7;
+            opacity:.7;
+            white-space:nowrap;
+            background:#fff url(gradient.png) repeat-x left bottom;
+            padding:5px 10px;
+            font:normal 11px arial;
+            border:1px solid #ccc;
+            display:inline-block;
+        }
+        
+        .dd-proxy .dd-proxy-icon {
+            display:inline-block;
+            vertical-align:middle;
+            margin-right:5px;
+            width:16px;
+            height:16px;
+            background:url(forbidden.png) no-repeat 0 0;
+        }
+        
+        .dd-proxy.dd-proxy-hover .dd-proxy-icon {
+            background:url(valid.png) no-repeat 0 0;
+        }
+
+        
+        .gradient-style {
+            border-collapse:separate;
+            font-family:"Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+            font-size:12px;
+            margin:20px;
+            text-align:left;
+            width:480px;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+            border:2px solid #cfd4af;
+        }
+        
+        .gradient-style th {
+            background:#B9C9FE url(gradhead.png) repeat-x scroll 0 0;
+            border-top:1px solid #cfd4af;
+            color:#838c4b;
+            font-size:13px;
+            font-weight:normal;
+            padding:8px;
+        }
+        
+        .gradient-style tbody tr:hover td {
+            background:#D0DAFD url(gradhover.png) repeat-x scroll 0 0;
+            color:#838c4b;
+        }
+        
+        .gradient-style td {
+            background:#E8EDFF url(gradback.png) repeat-x scroll 0 0;
+            border-bottom:1px solid #d1d1d1;
+            border-top:1px solid #fff;
+            color:#333;
+            padding:8px;
+        }
+        
+        #drophere {
+            padding:30px;
+        }
+        
+        .dd-drag-over {
+            border:2px solid #9cab79;
+        }
+        
+        .moo {
+            background:#fff url(gradback.png) repeat-x left bottom;
+        }
+        
+        </style>
+
+    </head>
+    
+    <body id="foob">
+
+        <img class="logo" src="http://playground.justswell.org/images/swell.png" />
+        <h5 style="color:#888;font:12px Verdana;margin:0 0 20px;font-style:italic;">Drag &amp; drop between tables using Event Delegation</h5>
+        <br />
+
+        <table id="bleh" summary="Meeting Results" cellpadding="0" cellspacing="0" class="gradient-style" onselectstart="return false;">
+          <thead>
+            <tr>
+              <th scope="col">
+                Employee
+              </th>
+              <th scope="col">
+                Division
+              </th>
+              <th scope="col">
+                Suggestions
+              </th>
+              <th scope="col">
+                Rating
+              </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                Give background color to the table cells to achieve seamless transition
+              </td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr id="row-one" draggable="true">
+              <td>
+                Stephen C. Cox
+              </td>
+              <td>
+                Marketing
+              </td>
+              <td>
+                Make discount offers
+              </td>
+              <td>
+                3/10
+              </td>
+            </tr>
+            <tr id="row-two" draggable="true">
+              <td>
+                Josephin Tan
+              </td>
+              <td>
+                Advertising
+              </td>
+              <td>
+                Give bonuses
+              </td>
+              <td>
+                5/10
+              </td>
+            </tr>
+            <tr id="row-three" draggable="true">
+              <td>
+                Joyce Ming
+              </td>
+              <td>
+                Marketing
+              </td>
+              <td>
+                New designs
+              </td>
+              <td>
+                8/10
+              </td>
+            </tr>
+            <tr id="row-four" draggable="true">
+              <td>
+                James A. Pentel
+              </td>
+              <td>
+                Marketing
+              </td>
+              <td>
+                Better Packaging
+              </td>
+              <td>
+                8/10
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <br />
+        <br />
+        
+        <table id="moo" summary="Meeting Results" cellpadding="0" cellspacing="0" class="gradient-style">
+          <thead>
+            <tr>
+              <th scope="col">
+                Employee
+              </th>
+              <th scope="col">
+                Division
+              </th>
+              <th scope="col">
+                Suggestions
+              </th>
+              <th scope="col">
+                Rating
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                Give background color to the table cells to achieve seamless transition
+              </td>
+            </tr>
+          </tfoot>
+          <tbody>
+          </tbody>
+        </table>
+        
+        
+        <script type="text/javascript">
+        
+        var proxyElement = html.div(null, html.span({
+            'cls' : 'dd-proxy-icon'
+        }), html.span('Dragging'));
+        
+        
+        var draggableRows = new Swell.Lib.DD.Draggable('bleh', {
+            'delegate' : true,
+            'proxy' : true,
+            'proxyOverride'    : proxyElement,  
+            'dataCallback' : function(dt) {
+                dt.setData('Text', this.getDragEl().html());
+            }
+        });
+
+        var dropTarget = new Swell.Lib.DD.Droppable('moo');
+        
+        dropTarget.ondrop = function(e) {
+            console.log(this);
+            this.getDragEl().appendTo($('moo').current().tBodies[0]);
+        }
+
+        </script>
+        
+    </body>
+</html>

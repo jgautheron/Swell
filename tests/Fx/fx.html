@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>Swell - Fxperiments</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        
+<!--         <script src="http://get.swl.fr/trunk/Event/Ajax/Element.js?ioi" type="text/javascript"></script> -->
+        
+        <script type="text/javascript" src="../../Swell.js"></script>
+        <script type="text/javascript" src="../../Core/Core.js"></script>
+        <script type="text/javascript" src="../../Core/Browser.js"></script>
+        <script type="text/javascript" src="../../Core/BrowserSupports.js"></script>
+        <script type="text/javascript" src="../../Core/Event.js"></script>
+        <script type="text/javascript" src="../../Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="../../Core/Hashtable.js"></script>
+        <script type="text/javascript" src="../../Core/Element.js"></script>
+        <script type="text/javascript" src="../../Lib/Fx.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="http://playground.justswell.org/css/playground.css" />
+        <style type="text/css">
+        
+        body {
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+        
+        img {
+            border:0;
+        }
+
+        #demo1 {
+            background:#ccc none repeat scroll 0 0;
+            margin-bottom:1em;
+            overflow:hidden;
+            width:40px;
+            height:40px;
+            position:absolute;
+            margin-right:10px;
+            border:1px solid black;
+            left:40px;
+        }
+
+        #demo2 {
+            background:red none repeat scroll 0 0;
+            margin-bottom:1em;
+            overflow:hidden;
+            width:40px;
+            height:40px;
+            position:relative;
+            display:inline-block;
+            margin-right:10px;
+            border:1px solid black;
+        }
+
+        </style>
+
+    </head>
+    
+    <body id="foob">
+
+        <img class="logo" src="http://playground.justswell.org/images/swell.png" />
+        <h5 style="color:#888;font:12px Verdana;margin:0 0 20px;font-style:italic;">Animation experiments</h5>
+        <br />
+
+        <h1>Basic Animation</h1>
+        <p>This demonstrates how to apply a simple animation effect to an HTMLElement. Click the button to begin the demo.</p>
+        <hr />
+        <br />
+
+        <div id="demo1"></div>
+        
+        <button id="demo_1" style="display:block; opacity:1; position:relative; top:150px;" type="button">Run</button>
+        
+        <script type="text/javascript">
+
+            Swell.Core.Event.add('demo_1', 'click', function() {
+        
+                var fx = new Swell.Lib.Fx('demo1')
+                    .chain({'left'   : '400px'})
+                    .chain({'width'  : '400px', 'height' : '400px'})
+                    .wait(500)
+                    .chain({'rotate' : '360deg'})
+                    .wait(300)
+                        .fadeOut()
+                    .run();
+
+                fx.onComplete = function() {
+                    this.el.style.cssText = '';
+                }
+
+            });
+
+        </script>
+        
+    </body>
+</html>

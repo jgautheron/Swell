@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+    <head>
+        <title>TestCase</title>
+
+        <script type="text/javascript" src="Swell.js"></script>
+        <script type="text/javascript" src="Core/Core.js"></script>
+        <script type="text/javascript" src="Core/Browser.js"></script>
+        <script type="text/javascript" src="Core/CustomEvent.js"></script>
+        <script type="text/javascript" src="Core/Hashtable.js"></script>
+        <script type="text/javascript" src="Core/Element.js"></script>
+        <script type="text/javascript" src="Core/Event.js"></script>
+        <script type="text/javascript" src="Core/Element/Bridge/Event.js"></script>
+        <script type="text/javascript" src="Core/Asset.js"></script>
+        <script type="text/javascript" src="Core/Element/Bridge/Asset.js"></script>
+        <script type="text/javascript" src="Core/Position.js"></script>
+        <script type="text/javascript" src="Widget/Carousel.js"></script>
+        
+        <style type="text/css">
+        
+            .mystyle {
+                background-color:#f5f5f5;
+                border:2px solid black;
+                padding:10px;
+            }
+            
+            .mystyle.disabled {
+                background-color:gray;
+                color:#ccc;
+            }
+        
+        </style>
+    
+    </head>
+    
+    
+    <body id="foob">
+        <h1>Test Case</h1>
+            
+        <div class="mystyle" id="foox" style="filter:alpha(opacity=50);opacity:0.5;float:none;width:15%;">
+            <span id="atafoo">foo</span>
+            <span>Boo</span>
+        Foo...
+        </div>
+        <div class="mystyle" id="bleh">Bleh...</div>
+        
+        <div id="boox" class="mystyle mwe">foo</div>
+        <span id="aboo"></span>
+        <div class="bench-result" id="bench-result">
+            
+        </div>
+        
+        <script type="text/javascript">
+            var startTime = new Date().getMilliseconds();
+            var testCount = 1000;
+            
+            var foo = { bar : null };
+            
+            while (testCount--) {
+                
+            }
+            var endTime = new Date().getMilliseconds();
+            document.getElementById('bench-result').innerHTML = (endTime - startTime) + 'ms';
+        </script>
+        
+    </body>
+</html>
